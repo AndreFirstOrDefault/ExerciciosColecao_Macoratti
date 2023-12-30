@@ -21,6 +21,7 @@ char[] abertos = new char[] {'(','{','[' };
 char[] fechados = new char[] { ')', '}',']' };
 
 Stack<char> stackParentesesAberto = new Stack<char>() { };
+Stack<char> stackFechado = new Stack<char> ();
 
 Console.WriteLine("\n### Escreva abaixo uma expressão matemática ###\n");
 string expressaoMatematica = Console.ReadLine();
@@ -37,29 +38,29 @@ foreach (var ch in caracter)
         }
         else if (fechados[j] == ch)
         {
+            stackFechado.Push(ch);
             if(stackParentesesAberto.Count > 0)
             {
                 if(stackParentesesAberto.Peek() == abertos[j])
                 {
                     stackParentesesAberto.Pop();
+                    stackFechado.Pop();
                 }
-                else
-                {
-                    Console.WriteLine("A expressão matemática não contém parênteses balanceados...");
-                }
+               
             }
         }
     }
 
 }
 
-if (stackParentesesAberto.Count > 0)
+if (stackParentesesAberto.Count == 0 && stackFechado.Count == 0)
 {
-    Console.WriteLine("\nA expressão matemática não contém parênteses balanceados\n");
+    Console.WriteLine("\nA expressão matemática é balanceada...\n");
+    
 }
 else
 {
-    Console.WriteLine("\nA expressão matemática é balanceada...\n");
+    Console.WriteLine("\nA expressão matemática não contém parênteses balanceados\n");
 }
 
 Console.ReadKey();
